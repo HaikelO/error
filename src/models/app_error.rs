@@ -22,6 +22,17 @@ pub struct AppErrorResponse {
     pub backtrace: String,
 }
 
+impl AppError {
+    pub fn new(cause: Option<String>, message: Option<String>, error_type: AppErrorType) -> Self {
+        AppError {
+            cause,
+            message,
+            error_type,
+            backtrace: Backtrace::new(),
+        }
+    }
+}
+
 impl ResponseError for AppError {
     fn status_code(&self) -> StatusCode {
         match self.error_type {
