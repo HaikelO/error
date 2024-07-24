@@ -40,6 +40,7 @@ impl ResponseError for AppError {
             AppErrorType::NotFoundError => StatusCode::NOT_FOUND,
             AppErrorType::SystemError => StatusCode::INTERNAL_SERVER_ERROR,
             AppErrorType::AlreadyExistError => StatusCode::BAD_REQUEST,
+            AppErrorType::UnauthorizedOperation => StatusCode::NOT_ACCEPTABLE
         }
     }
 

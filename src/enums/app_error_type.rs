@@ -11,7 +11,8 @@ pub enum AppErrorType {
     DbError,
     NotFoundError,
     SystemError,
-    AlreadyExistError
+    AlreadyExistError,
+    UnauthorizedOperation
 }
 
 impl From<MongoError> for AppErrorType {
