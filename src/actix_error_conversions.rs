@@ -5,8 +5,10 @@ use core::fmt;
 use actix_web::Error as ActixError;
 use backtrace::Backtrace;
 use bson::ser::Error as BsonSerError;
+use minio::s3::error::Error as MinioError;
 use mongodb::error::Error as MongoError;
 use std::io::Error as IOError;
+use std::error::Error  as StdError;
 
 use crate::{enums::app_error_type::AppErrorType, models::app_error::AppError};
 
@@ -49,6 +51,28 @@ impl From<BsonSerError> for AppError {
             message: None,
             cause: Some(error.to_string()),
             error_type: AppErrorType::SystemError,
+            backtrace: Backtrace::new(),
+        }
+    }
+}
+
+impl From<MinioError> for AppError {
+    fn from(error: MinioError) -> AppError {
+        AppError {
+            message: None,
+            cause: Some(error.to_string()),
+            error_type: AppErrorType::MinioError,
+            backtrace: Backtrace::new(),
+        }
+    }
+}
+
+impl From<Box<dyn StdError>> for AppError {
+    fn from(error: Box<dyn StdError>) -> AppError {
+        AppError {
+            message: None,
+            cause: Some(error.to_string()),
+            error_type: AppErrorType::MinioError,
             backtrace: Backtrace::new(),
         }
     }
