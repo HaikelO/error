@@ -1,11 +1,10 @@
-use core::fmt::{self};
-
+use actix_web::Error as ActixError;
 use actix_web::{HttpResponse, ResponseError};
+use core::fmt::{self};
+use minio::s3::error::Error as MinioError;
 use mongodb::error::Error as MongoError;
 use serde::Serialize;
 use std::io::Error as IOError;
-use actix_web::Error as ActixError;
-use minio::s3::error::Error as MinioError;
 
 #[derive(Debug, Serialize, Clone)]
 pub enum AppErrorType {
@@ -35,7 +34,6 @@ impl From<ActixError> for AppErrorType {
     }
 }
 
-
 impl From<MinioError> for AppErrorType {
     fn from(_error: MinioError) -> AppErrorType {
         AppErrorType::MinioError
@@ -48,10 +46,8 @@ impl ResponseError for AppErrorType {
     }
 }
 
-
 impl fmt::Display for AppErrorType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:?}", self)
     }
 }
-

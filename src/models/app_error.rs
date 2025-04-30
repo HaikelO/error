@@ -1,9 +1,7 @@
+use crate::enums::app_error_type::AppErrorType;
 use actix_web::{http::StatusCode, HttpResponse, ResponseError};
-
 use backtrace::Backtrace;
 use serde::Serialize;
-
-use crate::enums::app_error_type::AppErrorType;
 
 #[derive(Debug)]
 pub struct AppError {
@@ -41,7 +39,7 @@ impl ResponseError for AppError {
             AppErrorType::SystemError => StatusCode::INTERNAL_SERVER_ERROR,
             AppErrorType::AlreadyExistError => StatusCode::BAD_REQUEST,
             AppErrorType::UnauthorizedOperation => StatusCode::NOT_ACCEPTABLE,
-            AppErrorType::MinioError => StatusCode::INTERNAL_SERVER_ERROR
+            AppErrorType::MinioError => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
 
