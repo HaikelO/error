@@ -5,8 +5,11 @@ use bson::ser::Error as BsonSerError;
 use core::fmt;
 use minio::s3::error::Error as MinioError;
 use mongodb::error::Error as MongoError;
-use std::error::Error as StdError;
 use std::io::Error as IOError;
+use std::{
+    error::Error as StdError,
+    num::{ParseFloatError, ParseIntError},
+};
 
 use crate::{enums::app_error_type::AppErrorType, models::app_error::AppError};
 
@@ -84,6 +87,28 @@ impl fmt::Display for AppError {
 
 impl From<ParseError> for AppError {
     fn from(err: ParseError) -> Self {
+        AppError {
+            message: None,
+            cause: Some(err.to_string()),
+            error_type: AppErrorType::SystemError,
+            backtrace: Backtrace::new(),
+        }
+    }
+}
+
+impl From<ParseFloatError> for AppError {
+    fn from(err: ParseFloatError) -> Self {
+        AppError {
+            message: None,
+            cause: Some(err.to_string()),
+            error_type: AppErrorType::SystemError,
+            backtrace: Backtrace::new(),
+        }
+    }
+}
+
+impl From<ParseIntError> for AppError {
+    fn from(err: ParseIntError) -> Self {
         AppError {
             message: None,
             cause: Some(err.to_string()),
