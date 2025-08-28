@@ -117,3 +117,63 @@ impl From<ParseIntError> for AppError {
         }
     }
 }
+
+impl From<anyhow::Error> for AppError {
+    fn from(err: anyhow::Error) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("Internal error occurred".to_owned()),
+            AppErrorType::SystemError,
+        )
+    }
+}
+
+impl From<sqlx::Error> for AppError {
+    fn from(err: sqlx::Error) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("Database error occurred".to_owned()),
+            AppErrorType::DbError,
+        )
+    }
+}
+
+impl From<redis::RedisError> for AppError {
+    fn from(err: redis::RedisError) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("Redis error occurred".to_owned()),
+            AppErrorType::CacheError, // You'll need this variant
+        )
+    }
+}
+
+impl From<lapin::Error> for AppError {
+    fn from(err: lapin::Error) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("Message queue error occurred".to_owned()),
+            AppErrorType::MessageQueueError, // You'll need this variant
+        )
+    }
+}
+
+impl From<reqwest::Error> for AppError {
+    fn from(err: reqwest::Error) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("HTTP request error occurred".to_owned()),
+            AppErrorType::HttpError, // You'll need this variant
+        )
+    }
+}
+
+impl From<serde_json::Error> for AppError {
+    fn from(err: serde_json::Error) -> Self {
+        AppError::new(
+            Some(err.to_string()),
+            Some("JSON serialization error occurred".to_owned()),
+            AppErrorType::SerializationError, // You'll need this variant
+        )
+    }
+}

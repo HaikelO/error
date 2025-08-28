@@ -14,6 +14,10 @@ pub enum AppErrorType {
     AlreadyExistError,
     UnauthorizedOperation,
     MinioError,
+    CacheError,
+    MessageQueueError,
+    HttpError,
+    SerializationError,
 }
 
 impl From<MongoError> for AppErrorType {

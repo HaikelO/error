@@ -40,6 +40,10 @@ impl ResponseError for AppError {
             AppErrorType::AlreadyExistError => StatusCode::BAD_REQUEST,
             AppErrorType::UnauthorizedOperation => StatusCode::NOT_ACCEPTABLE,
             AppErrorType::MinioError => StatusCode::INTERNAL_SERVER_ERROR,
+            AppErrorType::CacheError => StatusCode::INTERNAL_SERVER_ERROR,
+            AppErrorType::MessageQueueError => StatusCode::INTERNAL_SERVER_ERROR,
+            AppErrorType::HttpError => StatusCode::INTERNAL_SERVER_ERROR,
+            AppErrorType::SerializationError => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
 
