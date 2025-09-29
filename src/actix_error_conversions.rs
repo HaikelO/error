@@ -143,17 +143,18 @@ impl From<redis::RedisError> for AppError {
         AppError::new(
             Some(err.to_string()),
             Some("Redis error occurred".to_owned()),
-            AppErrorType::CacheError, // You'll need this variant
+            AppErrorType::CacheError,
         )
     }
 }
 
+#[cfg(feature = "lapin")]
 impl From<lapin::Error> for AppError {
     fn from(err: lapin::Error) -> Self {
         AppError::new(
             Some(err.to_string()),
             Some("Message queue error occurred".to_owned()),
-            AppErrorType::MessageQueueError, // You'll need this variant
+            AppErrorType::MessageQueueError,
         )
     }
 }
@@ -163,7 +164,7 @@ impl From<reqwest::Error> for AppError {
         AppError::new(
             Some(err.to_string()),
             Some("HTTP request error occurred".to_owned()),
-            AppErrorType::HttpError, // You'll need this variant
+            AppErrorType::HttpError,
         )
     }
 }
@@ -173,7 +174,7 @@ impl From<serde_json::Error> for AppError {
         AppError::new(
             Some(err.to_string()),
             Some("JSON serialization error occurred".to_owned()),
-            AppErrorType::SerializationError, // You'll need this variant
+            AppErrorType::SerializationError,
         )
     }
 }
