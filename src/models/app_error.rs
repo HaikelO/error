@@ -9,6 +9,7 @@ pub struct AppError {
     pub message: Option<String>,
     pub error_type: AppErrorType,
     pub backtrace: Backtrace,
+    pub show_backtrace: bool,
 }
 
 #[derive(Serialize)]
@@ -17,7 +18,8 @@ pub struct AppErrorResponse {
     pub message: Option<String>,
     pub error_type: AppErrorType,
     pub status_code: u16,
-    pub backtrace: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub backtrace: Option<String>,
 }
 
 impl AppError {
@@ -27,7 +29,13 @@ impl AppError {
             message,
             error_type,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
+    }
+
+    pub fn with_backtrace(mut self) -> Self {
+        self.show_backtrace = true;
+        self
     }
 }
 
@@ -54,7 +62,9 @@ impl ResponseError for AppError {
             message: self.message.clone(),
             error_type: self.error_type.clone(),
             status_code: self.status_code().as_u16(),
-            backtrace: format!("{:?}", self.backtrace),
+            backtrace: self
+                .show_backtrace
+                .then(|| format!("{:?}", self.backtrace)),
         })
     }
 }
