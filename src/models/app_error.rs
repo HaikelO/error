@@ -44,6 +44,7 @@ impl ResponseError for AppError {
             AppErrorType::MessageQueueError => StatusCode::INTERNAL_SERVER_ERROR,
             AppErrorType::HttpError => StatusCode::INTERNAL_SERVER_ERROR,
             AppErrorType::SerializationError => StatusCode::INTERNAL_SERVER_ERROR,
+            AppErrorType::ValidationError => StatusCode::BAD_REQUEST,
         }
     }
 

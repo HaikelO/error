@@ -18,6 +18,7 @@ pub enum AppErrorType {
     MessageQueueError,
     HttpError,
     SerializationError,
+    ValidationError,
 }
 
 impl From<MongoError> for AppErrorType {
