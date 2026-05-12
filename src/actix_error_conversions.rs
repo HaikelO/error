@@ -20,6 +20,7 @@ impl From<MongoError> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::DbError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -31,6 +32,7 @@ impl From<IOError> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -42,6 +44,7 @@ impl From<ActixError> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -53,6 +56,7 @@ impl From<BsonSerError> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -64,6 +68,7 @@ impl From<MinioError> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::MinioError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -75,6 +80,7 @@ impl From<Box<dyn StdError>> for AppError {
             cause: Some(error.to_string()),
             error_type: AppErrorType::MinioError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -92,6 +98,7 @@ impl From<ParseError> for AppError {
             cause: Some(err.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -103,6 +110,7 @@ impl From<ParseFloatError> for AppError {
             cause: Some(err.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
@@ -114,6 +122,7 @@ impl From<ParseIntError> for AppError {
             cause: Some(err.to_string()),
             error_type: AppErrorType::SystemError,
             backtrace: Backtrace::new(),
+            show_backtrace: false,
         }
     }
 }
